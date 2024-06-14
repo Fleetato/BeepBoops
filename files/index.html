@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>BeepBoops - File Manager</title>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js"></script> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta charset="utf-8" />
+    <style>
+        /* pretty styles */
+        @import url('https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap');
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body{
+            font-family: 'Jost', sans-serif;
+            text-align: center;
+        }
+
+        .uploadArea {
+            width: 80vw;
+            border-radius: 5px;
+            box-shadow: 0px 1px 3px gray;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        
+        .listItem{
+            background-color: #9be0e0;
+            padding: 15px;
+            margin: 1vh auto;
+            width: 80vw;
+            border-radius: 5px;
+            box-shadow: 0px 1px 3px gray;
+        }
+
+        .listItem button{
+            float: right;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .listItem button:active{
+            background-color: #3d0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+    </style>
+  </head>
+  <body unselectable="on">
+
+    <div id="fileList">
+        
+    </div>
+    
+    <!-- Uploading is handled by a form that gets processed by the server -->
+    <form class="uploadArea" action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="upload">
+        <button id="" type="submit">Upload</button>
+    </form>
+    <script src="script.js"></script>
+  </body>
+</html>
