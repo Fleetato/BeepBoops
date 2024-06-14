@@ -7,6 +7,9 @@ const socket = io(); //connect the the socket io instance
 let amp; //amp for sound
 let sounds = []; //hold a list of sounds
 let colors = ["#FF6B6B", "#FFD93D", "#6BCB77", "#4D96FF"]; // pretty colors
+let circleSize = 0.25
+
+
 
 // all the drawing and audio loading tasks that need to be preloaded
 function preload(){
@@ -67,11 +70,17 @@ socket.on("stopAll",()=>{
     }
 });
 
+//checking if on mobile
+function isMobile() {
+    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    return regex.test(navigator.userAgent);
+  }
+
 //this is all the fun drawing stuff
 function draw() {
     
     //don't render anything if people are landscape (to keep the experience consistent)
-    if(windowHeight > windowWidth){
+    if(windowHeight > windowWidth || !isMobile()){
         background(255);
         // a courtesy loading screen
         if(loading){
@@ -96,7 +105,7 @@ function draw() {
         textSize(height/10);
         textAlign(CENTER,CENTER);
         rectMode(CENTER);
-        text("Please rotate your device to portait orientation and lock rotation.", width /2, height /2, width * 0.8, height * 0.8);
+        text("Please rotate your device to portait orientation and lock rotation :)", width /2, height /2, width * 0.8, height * 0.8);
     }
 }
 
@@ -111,23 +120,24 @@ function mainMenu(){
     rectMode(CENTER);
     noStroke();
     fill(200);
-    circle(width *0.25, height* 0.4, width *0.25);
-    circle(width *0.75, height* 0.4, width *0.25);
-    circle(width *0.25, height* 0.6, width *0.25);
-    circle(width *0.75, height* 0.6, width *0.25);
+    if(!isMobile()){ circleSize = 0.1 }
+    circle(width * 0.25, height * 0.4, width * circleSize);
+    circle(width * 0.75, height * 0.4, width * circleSize);
+    circle(width * 0.25, height * 0.6, width * circleSize);
+    circle(width * 0.75, height * 0.6, width * circleSize);
     fill(255);
     textSize(height / 20);
 
-    text("A", width *0.25, height* 0.422);
-    text("B", width *0.75, height* 0.422);
-    text("C", width *0.25, height* 0.622);
-    text("D", width *0.75, height* 0.622);
+    text("A", width *0.25, height* 0.417);
+    text("B", width *0.75, height* 0.417);
+    text("C", width *0.25, height* 0.617);
+    text("D", width *0.75, height* 0.617);
 
     fill(50);
     textSize(height * 0.077);
     text("BeepBoops", width/ 2, height * 0.2);
     textSize(height * 0.02);
-    text("By Lainie Fefferman and Randiel Zoquier", width/ 2, height * 0.85);
+    text("By Lainie Fefferman, Randiel Zoquier,\nand Kate Tramm", width/ 2, height * 0.85);
 }
 
 //all the rendering for the boop screens
@@ -145,47 +155,90 @@ function mainScreen(screenNo){
         rect(0,0,width,height);
     }
     
-    
+    if(isMobile())
+        {
+            //mobile sizing
+            if(screenNo == 1){
+                noStroke();
+                fill(240);
+                textSize(height * 1.3);
+                push();
+                rotate(130);
+                text("A", width / 2, 0);
+                pop();
+            }
+            if(screenNo == 2){
+                noStroke();
+                fill(240);
+                textSize(height * 1.9);
+                push();
+                rotate(80);
+                translate(width *0.8, height *0.5);
+                text("B", 0, 0);
+                pop();
 
-    if(screenNo == 1){
-        noStroke();
-        fill(240);
-        textSize(height * 1.3);
-        push();
-        rotate(130);
-        text("A", width / 2, 0);
-        pop();
-    }
-    if(screenNo == 2){
-        noStroke();
-        fill(240);
-        textSize(height * 1.9);
-        push();
-        rotate(80);
-        translate(width *0.8, height *0.5);
-        text("B", 0, 0);
-        pop();
-
-    }
-    if(screenNo == 3){
-        noStroke();
-        fill(240);
-        textSize(height * 1.8);
-        push();
-        rotate(-70);
-        translate(width * - 1.25, height *0.65);
-        text("C", 0, 0);
-        pop();
-    }
-    if(screenNo == 4){
-        noStroke();
-        fill(240);
-        textSize(height * 1.13);
-        push();
-        rotate(10);
-        translate(width *0.5, height *0.9);
-        text("D", 0, 0);
-        pop();
+            }
+            if(screenNo == 3){
+                noStroke();
+                fill(240);
+                textSize(height * 1.8);
+                push();
+                rotate(-70);
+                translate(width * - 1.25, height *0.65);
+                text("C", 0, 0);
+                pop();
+            }
+            if(screenNo == 4){
+                noStroke();
+                fill(240);
+                textSize(height * 1.13);
+                push();
+                rotate(10);
+                translate(width *0.5, height *0.9);
+                text("D", 0, 0);
+                pop();
+            }
+        }else{
+            //desktop sizing
+            if(screenNo == 1){
+                noStroke();
+                fill(240);
+                textSize(height * 1.3);
+                push();
+                rotate(130);
+                text("A", width / 2, 0);
+                pop();
+            }
+            if(screenNo == 2){
+                noStroke();
+                fill(240);
+                textSize(height * 1.9);
+                push();
+                rotate(80);
+                translate(width *0.8, height *0.5);
+                text("B", 0, 0);
+                pop();
+            }
+            if(screenNo == 3){
+                noStroke();
+                fill(240);
+                textSize(height * 1.8);
+                push();
+                rotate(-70);
+                translate(width * - 1.25, height *0.65);
+                text("C", 0, 0);
+                pop();
+            }
+            if(screenNo == 4){
+                noStroke();
+                fill(240);
+                textSize(height * 1.13);
+                push();
+                rotate(10);
+                translate(width *0.5, height *0.9);
+                text("D", 0, 0);
+                pop();
+            }
     }
 
     fill(100);
