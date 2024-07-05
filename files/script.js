@@ -18,7 +18,7 @@ function getFilesNames(){
     }).catch( err => console.error(`Fetch problem: ${err.message}`) );
 }
 
-//handle deleiting sounds
+//handle deleting sounds
 function del(filename){
     fetch('/delete', 
     {
@@ -34,3 +34,4 @@ function upload(){
     fetch('/upload', {method: "POST", body: data}); //fix these fetches
     getFilesNames();
 }
+
