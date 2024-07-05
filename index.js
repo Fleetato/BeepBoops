@@ -28,6 +28,7 @@ filename: (req,file,cb)=>{
 }});
 let upload = multer({storage: stor});
 
+
 //instantiating the server and adding the other pages so it can be loaded by the site
 const io = new Server(server);
 app.use( "/controller", express.static(__dirname +"/controller/"));
@@ -35,10 +36,12 @@ app.use("/", express.static(__dirname +"/client/"));
 app.use("/client", express.static(__dirname +"/client/"));
 app.use("/files", express.static(__dirname + "/files"));
 
+
 //if someone requests the main webpage, they get served the client website
 app.get("/", (req,res)=>{
     res.sendFile(__dirname +"/client/index.html");
 });
+
 
 //if someone requests the filenames of all the sound file names
 app.get("/filenames/", (req, res)=>{
@@ -46,14 +49,17 @@ app.get("/filenames/", (req, res)=>{
     res.send(fileNames);
 });
 
+
 // if someone requests the controller webpage, they get served the controller website
 app.get("/controller", (req,res)=>{
     res.sendFile(__dirname +"/controller/index.html");
 });
 
+
 app.get("/client", (req, res)=>{
     res.sendFile(__dirname +"/client/index.html");
 });
+
 
 //this handles the delete message when deleting files from the storage
 app.delete("/delete", bodyParser.text(), (req, res)=>{
@@ -73,10 +79,15 @@ app.delete("/delete", bodyParser.text(), (req, res)=>{
     
 });
 
-//this is the code that handles the upload request to the server. notice the "upload.single". maybe this could be a multi upload hmmmm
-app.post("/upload", upload.single('upload'),(req,res)=>{
+
+
+//this is the code that handles the upload request to the server
+app.post("/upload", upload.array('upload', 100),(req,res)=>{
+    console.log(req.body);
+    console.log(req.files)
     return res.redirect('/files'); 
 });
+
 
 
 //FROM HERE ON OUT IT"S SOCKET.IO LAND
